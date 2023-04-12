@@ -8,6 +8,7 @@
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/game">WordleGame</RouterLink>
+        <RouterLink to="/wordle">count</RouterLink>
       </nav>
     </div>
   </header>
