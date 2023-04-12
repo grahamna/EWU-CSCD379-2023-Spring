@@ -1,9 +1,9 @@
 <template>
   <header>
-    <img alt="EWU logo" class="logo" src="@/assets/ewuLogo.svg" width="250" height="250" />
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="CSCD 379 .NET" />
+      <HelloWorld msg="Assignment 1 CSCD 379" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
