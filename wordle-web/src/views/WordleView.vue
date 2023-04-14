@@ -1,7 +1,7 @@
 <template>
   <h1>Wordle Mind Bender</h1>
   <v-text-field v-model="guess" label="Guess" variant="solo"></v-text-field>
-
+<br>
   <v-btn @click="checkGuess">Submit</v-btn>
   <div>
     <v-row v-for="word in guesses">
