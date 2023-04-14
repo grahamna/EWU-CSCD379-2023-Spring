@@ -1,6 +1,6 @@
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" class="logo" src="@/assets/ewuLogo.svg" width="200" height="200" />
 
     <div class="wrapper">
       <HelloWorld msg="Assignment 1 CSCD 379" />
@@ -8,7 +8,6 @@
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/game">WordleGame</RouterLink>
-        <RouterLink to="/wordle">count</RouterLink>
       </nav>
     </div>
   </header>
