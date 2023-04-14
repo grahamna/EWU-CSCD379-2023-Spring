@@ -1,5 +1,4 @@
 
-
 <template>
   <div class="game">
     <VCard variant="tonal">

@@ -1,3 +1,4 @@
+
 <template>
   <h1>Wordle Mind Bender</h1>
   <v-text-field v-model="guess" label="Guess" variant="solo"></v-text-field>

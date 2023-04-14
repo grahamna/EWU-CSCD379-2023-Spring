@@ -7,7 +7,8 @@
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/game">WordleGame</RouterLink>
+        <RouterLink to="/game">WIP</RouterLink>
+        <RouterLink to="/wordle">WordleGame</RouterLink>
       </nav>
     </div>
   </header>
