@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Wordle from '../views/Wordle.vue'
+import Wordle from '../views/WordleView.vue'
 import GameView from '../views/game.vue'
 
 const router = createRouter({
@@ -20,11 +20,6 @@ const router = createRouter({
       path: '/game',
       name: 'game',
       component: GameView
-    },
-    {
-      path: '/wordle',
-      name: 'wordle',
-      component: WordleView
     },
     {
       path: '/about',
