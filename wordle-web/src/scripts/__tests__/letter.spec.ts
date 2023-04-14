@@ -5,7 +5,7 @@ describe('Letter', () => {
     it('Gets correct String Val', () => {
         const letter = new Letter('a')
         letter.status = LetterStatus.Correct
-        expect(letter.letter).toBe('a')
+        expect(letter.char).toBe('a')
     })
 
     it('Gets Correct Color', () => {
