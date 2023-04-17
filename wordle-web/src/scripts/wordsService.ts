@@ -3,13 +3,15 @@ export abstract class WordsService {
     return this.#words[Math.floor(Math.random() * this.#words.length)]
   }
 
+  // returns false if input is found, true if it is not found?
   static isValidWord(word: string): boolean {
     return this.#words.includes(word)
   }
 
+  // Create/extend a word list component with a method called validWords that returns an array of valid words based on current guesses
   static validWords(): Array<string> {
-    //Todo
-    return new Array<string>()
+    
+    return this.#words;
   }
 
   // From: https://github.com/kashapov/react-testing-projects/blob/master/random-word-server/five-letter-words.json

@@ -2,7 +2,7 @@
 <template>
   <h1>Wordle Mind Bender</h1>
   <v-text-field v-model="guess" label="Guess" variant="solo"></v-text-field>
-
+  <br>
   <v-btn @click="checkGuess">Check</v-btn>
   <div>
     <v-row v-for="word in game.guesses" :key="word.text">
@@ -14,7 +14,7 @@
     </v-row>
   </div>
 
-  <h2>{{ guess }}</h2>
+  <h3>{{ guess }}</h3>
   <h3>{{ game.secretWord }}</h3>
 </template>
 

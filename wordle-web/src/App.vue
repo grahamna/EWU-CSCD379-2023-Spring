@@ -3,11 +3,14 @@
     <img alt="Vue logo" class="logo" src="@/assets/ewuLogo.svg" width="200" height="200" />
 
     <div class="wrapper">
-      <HelloWorld msg="Assignment 1 CSCD 379" />
+      <HelloWorld msg="Assignment 2 CSCD 379" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/game">WordleGame</RouterLink>
+        <RouterLink to="/game">WIP</RouterLink>
+        <RouterLink to="/wordle">InClassExample</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+
       </nav>
     </div>
   </header>
@@ -16,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+  import { RouterLink, RouterView } from 'vue-router'
+  import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <style scoped>
