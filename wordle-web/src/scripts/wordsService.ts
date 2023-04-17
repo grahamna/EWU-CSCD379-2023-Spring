@@ -1,4 +1,5 @@
 export abstract class WordsService {
+
   static getRandomWord(): string {
     return this.#words[Math.floor(Math.random() * this.#words.length)]
   }
@@ -9,9 +10,27 @@ export abstract class WordsService {
   }
 
   // Create/extend a word list component with a method called validWords that returns an array of valid words based on current guesses
-  static validWords(): Array<string> {
+  static validWords(knownLetters:string[],notAllowedLetters:string[]): Array<string> {
+
     
-    return this.#words;
+    const regexString = knownLetters.map(letter => {
+        if (letter) {
+          return letter;
+        } else {
+          return "[a-z]";
+        }
+      }).join("");
+  
+    const negativeLookaheads = "^[^"+notAllowedLetters.toString()+"]*$"
+  
+    const regExPos : RegExp = new RegExp(`^${regexString}$`)
+  
+
+    const regExNeg : RegExp = new RegExp(`${negativeLookaheads}`) 
+      
+    const result1 : string[] = this.#words.filter(word => regExPos.test(word));
+    const result = result1.filter(word => regExNeg.test(word))
+    return result;
   }
 
   // From: https://github.com/kashapov/react-testing-projects/blob/master/random-word-server/five-letter-words.json

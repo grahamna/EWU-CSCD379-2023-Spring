@@ -2,10 +2,10 @@
 <template>
     <VCard variant="tonal">
       <VCardTitle>
-        WordleCopy
+        DaWordleCopy
       </VCardTitle>
       <VCardSubtitle>
-        Sample Text. Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, fuga consectetur.
+        {{ subtitle }}
       </VCardSubtitle>
       <v-divider :thickness="5"></v-divider>
       <v-container>
@@ -28,10 +28,8 @@
         :label="message"
         clearable
       ></v-combobox>
-      <br>
-        <v-btn @click="checkGuess">Submit</v-btn>
         <br>
-        <h3>{{"Guess: "+ guess }}</h3>
+        <v-btn @click="checkGuess">Submit</v-btn>
         <br>
         <h3>{{"Answer: "+ game.secretWord }}</h3>
 
@@ -49,7 +47,9 @@
   import { WordsService } from '../scripts/wordsService'
   import { WordleGame } from '../scripts/wordleGame'
   import { ref, reactive } from 'vue'
+  import { Word } from '@/scripts/word';
 
+  const subtitle = ref('Try to Guess the word! It has 5 Letters.')
   const message = ref('WordGuess')
   const guess = ref('')
   const game = reactive(new WordleGame())
@@ -60,13 +60,13 @@
       message.value = "Invalid Length - Must be of length 5"
       guess.value = ''
     }
-    else if (!WordsService.isValidWord(guess.value)) {
-      message.value ="Invalid Word - This is not a real word"
+    else if (!WordsService.isValidWord(guess.value.toLowerCase())) {
+      message.value ="Invalid Word - Input is not a real word"
       guess.value = ''
-      } 
+    }
     else {
       console.log(guess);
-      game.submitGuess(guess.value.toLocaleLowerCase())
+      game.submitGuess(guess.value.toLowerCase())
     }
   }
 </script>
