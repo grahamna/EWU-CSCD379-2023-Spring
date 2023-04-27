@@ -1,38 +1,26 @@
 <template>
   <h1>Wordle Mind Bender</h1>
-  <h2>{{ subtitle }}</h2>
+
   <GameBoard :game="game" @letterClick="addChar" />
 
-  <br />
-  <KeyBoard @letterClick="addChar" />
-  <br />
+  <KeyBoard @letterClick="addChar" :guessedLetters="game.guessedLetters" />
 
-  <v-btn size="large" @click="checkGuess" @keyup.enter="checkGuess"> Check </v-btn>
+  <v-btn @click="checkGuess" @keyup.enter="checkGuess"> Check </v-btn>
 
-  <v-btn @click="restartGame" @keyup.enter="restartGame"> Restart </v-btn>
-
+  <h2>{{ guess }}</h2>
   <h3>{{ game.secretWord }}</h3>
-  <br />
-  <ValidWords :list="list" :key="game.guesses.length" @setWord="setWord" />
 </template>
 
 <script setup lang="ts">
 import { WordleGame } from '@/scripts/wordleGame'
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import GameBoard from '../components/GameBoard.vue'
 import KeyBoard from '../components/KeyBoard.vue'
 import type { Letter } from '@/scripts/letter'
-import { WordsService } from '../scripts/wordsService'
-import { watch, onMounted, onUnmounted } from 'vue'
-import ValidWords from '../components/ValidWords.vue'
-import { Word } from '../scripts/word'
 
 const guess = ref('')
-const subtitle = ref('')
 const game = reactive(new WordleGame())
-const list = ref(game.getValidWords())
 console.log(game.secretWord)
-console.log(game.validWordList.length)
 
 onMounted(() => {
   window.addEventListener('keyup', keyPress)
@@ -41,53 +29,14 @@ onUnmounted(() => {
   window.removeEventListener('keyup', keyPress)
 })
 
-watch(
-  guess,
-  (newGuess, oldGuess) => {
-    if (newGuess.length > 5) {
-      guess.value = oldGuess || ''
-    }
-  },
-  { flush: 'post' }
-)
-
 function checkGuess() {
-  if (guess.value.length !== game.secretWord.length) {
-    subtitle.value = 'Guess is Incorrect Length'
-    game.clearCurrentGuess()
-  } else if (!WordsService.isValidWord(guess.value)) {
-    subtitle.value = 'Guess is not a Valid Word'
-    game.clearCurrentGuess()
-  } else {
-    game.submitGuess()
-    list.value = game.getValidWords()
-    if (game.endGame()) {
-      subtitle.value = 'You Win!'
-      game.restartGame()
-    } else {
-      if (game.continue === false) {
-        subtitle.value = 'You Failed! The word was: ' + game.secretWord
-        game.restartGame()
-      }
-    }
-  }
+  game.submitGuess()
   guess.value = ''
-}
-
-function restartGame() {
-  game.restartGame()
-  subtitle.value = 'Game was Reset'
 }
 
 function addChar(letter: Letter) {
   game.guess.push(letter.char)
   guess.value += letter.char
-}
-
-function setWord(word: string) {
-  const nGuess = new Word(word)
-  game.inputWord(nGuess)
-  guess.value = word
 }
 
 function keyPress(event: KeyboardEvent) {
@@ -102,6 +51,5 @@ function keyPress(event: KeyboardEvent) {
     guess.value += event.key.toLowerCase()
     game.guess.push(event.key.toLowerCase())
   }
-  //event.preventDefault()
 }
 </script>
