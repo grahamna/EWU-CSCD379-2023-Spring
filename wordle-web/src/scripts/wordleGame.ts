@@ -1,4 +1,3 @@
-import type { Letter } from '@/scripts/letter'
 import { Word } from '@/scripts/word'
 import { WordsService } from './wordsService'
 import type { Letter } from './letter'
@@ -17,7 +16,6 @@ export class WordleGame {
   }
   guessedLetters: Letter[] = []
   guesses = new Array<Word>()
-  guessedLetters: Letter[] = []
   secretWord = ''
   status = WordleGameStatus.Active
   guess!: Word
@@ -36,7 +34,7 @@ export class WordleGame {
     this.guesses.splice(0)
     // create a word for each guess
     for (let iWord = 0; iWord < this.numberOfGuesses; iWord++) {
-      const word = new Word(this.secretWord.length)
+      const word = new Word(null, this.secretWord.length)
       this.guesses.push(word)
     }
     this.guess = this.guesses[0]
