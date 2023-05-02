@@ -12,7 +12,7 @@ export class Letter {
   status: LetterStatus = LetterStatus.NotGuessed
   static char: string
 
-  constructor(char: string, status?: LetterStatus) {
+  constructor(char: string = '', status?: LetterStatus) {
     this.char = char
     this.status = status ?? LetterStatus.NotGuessed
   }

@@ -17,12 +17,11 @@
 
 <script setup lang="ts">
 import { WordleGame } from '@/scripts/wordleGame'
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import GameBoard from '../components/GameBoard.vue'
 import KeyBoard from '../components/KeyBoard.vue'
 import type { Letter } from '@/scripts/letter'
 import { WordsService } from '../scripts/wordsService'
-import { watch, onMounted, onUnmounted } from 'vue'
 import ValidWords from '../components/ValidWords.vue'
 import { Word } from '../scripts/word'
 
@@ -39,16 +38,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('keyup', keyPress)
 })
-
-watch(
-  guess,
-  (newGuess, oldGuess) => {
-    if (newGuess.length > 5) {
-      guess.value = oldGuess || ''
-    }
-  },
-  { flush: 'post' }
-)
 
 function checkGuess() {
   if (guess.value.length !== game.secretWord.length) {
@@ -107,7 +96,6 @@ function keyPress(event: KeyboardEvent) {
     guess.value += event.key.toLowerCase()
     game.guess.push(event.key.toLowerCase())
   }
-  //event.preventDefault()
 }
 
 function backSpace() {
