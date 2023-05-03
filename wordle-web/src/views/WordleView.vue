@@ -2,13 +2,17 @@
   <h1>Wordle Mind Bender</h1>
 
   <GameBoard :game="game" @letterClick="addChar" />
-
+  <br />
   <KeyBoard @letterClick="addChar" :guessedLetters="game.guessedLetters" />
+  <br />
+  <h2>{{ subtitle }}</h2>
+  <v-btn @click="restartGame(7)"> Easy </v-btn>
+  <v-btn @click="restartGame(6)"> Medium </v-btn>
+  <v-btn @click="restartGame(5)"> Hard </v-btn>
 
-  <v-btn @click="checkGuess" @keyup.enter="checkGuess"> Check </v-btn>
-
-  <h2>{{ guess }}</h2>
   <h3>{{ game.secretWord }}</h3>
+  <br />
+  <ValidWords :list="list" :key="game.guesses.length" @setWord="setWord" />
 </template>
 
 <script setup lang="ts">
@@ -17,9 +21,16 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import GameBoard from '../components/GameBoard.vue'
 import KeyBoard from '../components/KeyBoard.vue'
 import type { Letter } from '@/scripts/letter'
+import { WordsService } from '../scripts/wordsService'
+import ValidWords from '../components/ValidWords.vue'
+import { Word } from '../scripts/word'
 
 const guess = ref('')
+const subtitle = ref('')
 const game = reactive(new WordleGame())
+
+const list = ref(game.getValidWords())
+
 
 onMounted(async () => {
   window.addEventListener('keyup', keyPress)
@@ -31,13 +42,48 @@ onUnmounted(() => {
 })
 
 function checkGuess() {
-  game.submitGuess()
+  if (guess.value.length !== game.secretWord.length) {
+    subtitle.value = 'Guess is Incorrect Length'
+    game.clearCurrentGuess()
+  } else if (!WordsService.isValidWord(guess.value)) {
+    subtitle.value = 'Guess is not a Valid Word'
+    game.clearCurrentGuess()
+  } else {
+    game.submitGuess()
+    list.value = game.getValidWords()
+    if (game.endGame()) {
+      subtitle.value = 'You Win!'
+    } else {
+      if (game.continue === false) {
+        subtitle.value = 'You Failed! The word was: ' + game.secretWord
+      }
+    }
+  }
   guess.value = ''
 }
 
+function restartGame(numberOfGuesses?: number) {
+  const num = numberOfGuesses || 6
+  game.restartGame(undefined, num)
+  subtitle.value = 'Game was Reset'
+  list.value = game.getValidWords()
+}
+
 function addChar(letter: Letter) {
-  game.guess.push(letter.char)
-  guess.value += letter.char
+  if (letter.char === 'enter') {
+    checkGuess()
+  } else if (letter.char === 'del') {
+    backSpace()
+  } else {
+    game.guess.push(letter.char)
+    guess.value += letter.char
+  }
+}
+
+function setWord(word: string) {
+  const nGuess = new Word(word)
+  game.inputWord(nGuess)
+  guess.value = word
 }
 
 function keyPress(event: KeyboardEvent) {
@@ -52,5 +98,11 @@ function keyPress(event: KeyboardEvent) {
     guess.value += event.key.toLowerCase()
     game.guess.push(event.key.toLowerCase())
   }
+}
+
+function backSpace() {
+  guess.value = guess.value.slice(0, -1)
+  game.guess.pop()
+  console.log('Back')
 }
 </script>

@@ -48,6 +48,12 @@ export class Word {
     }
   }
 
+  clear() {
+    for (let i = 0; i < this.letters.length; i++) {
+      this.letters[i].char = ''
+    }
+  }
+
   check(secretWord: string): boolean {
     console.log(this.text)
     // check if the letters are valid

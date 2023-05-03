@@ -1,5 +1,9 @@
 <template>
-  <v-btn :color="props.color">
+  <v-btn
+    class="gradient-btn"
+    :color="props.color"
+    :style="{ 'background-image': 'linear-gradient(to right, #ffffff38, #09476b3b) !important' }"
+  >
     {{ props.char }}
   </v-btn>
 </template>
