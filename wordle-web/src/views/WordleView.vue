@@ -31,7 +31,6 @@ const game = reactive(new WordleGame())
 
 const list = ref(game.getValidWords())
 
-
 onMounted(async () => {
   window.addEventListener('keyup', keyPress)
   await game.restartGame()

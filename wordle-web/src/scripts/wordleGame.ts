@@ -28,7 +28,6 @@ export class WordleGame {
   containsLetters: string[] = []
   validWordList: string[] = this.getValidWords()
 
-
   async restartGame(secretWord?: string | null, numberOfGuesses: number = 6) {
     this.secretWord = secretWord || (await WordsService.getWordFromApi())
     this.guesses.splice(0)
